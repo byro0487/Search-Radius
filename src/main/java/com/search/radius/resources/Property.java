@@ -1,28 +1,32 @@
 package com.search.radius.resources;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-@Entity
+import org.springframework.data.couchbase.core.mapping.Document;
+
+import com.couchbase.client.java.repository.annotation.Field;
+import com.couchbase.client.java.repository.annotation.Id;
+
+@Document
 public class Property {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	@NotBlank(message = "longitude cannot be empty")
+
+	@Field
+	@NotNull
 	private float longitude;
-	
-	@NotBlank(message = "latitude cannot be empty")
+
+	@Field
+	@NotNull
 	private float latitude;
-	
-	@NotBlank(message = "price cannt be empty")
+
+	@Field
+	@NotNull
 	private float price;
-	
-	@NotBlank(message = "bedrooms cannot be empty")
+
+	@Field
+	@NotNull
 	private int bedRooms;
 
 	public Property(float longitude, float latitude, float price, int bedRooms, int bathRooms) {

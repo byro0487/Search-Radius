@@ -1,11 +1,11 @@
 package com.search.radius.config;
 
-import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import com.search.radius.resources.Property;
 
-@SpringBootConfiguration
+@Configuration
 public class ResourcesConfig {
 
 	@Bean

@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "com.search.radius.controllers")
+@ComponentScan(basePackages = "com.search.radius")
 public class BetaApplication {
 
 	public static void main(String[] args) {
