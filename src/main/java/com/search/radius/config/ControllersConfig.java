@@ -8,9 +8,9 @@ import com.search.radius.controllers.PropertySearchController;
 @Configuration
 public class ControllersConfig {
 
-	/*
-	 * @Bean public PropertySearchController getPropertySearchController() { return
-	 * new PropertySearchController(); }
-	 */
+	@Bean
+	public PropertySearchController getPropertySearchController() {
+		return new PropertySearchController();
+	}
 
 }

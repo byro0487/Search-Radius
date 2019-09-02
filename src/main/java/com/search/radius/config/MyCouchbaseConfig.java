@@ -7,8 +7,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.couchbase.config.AbstractCouchbaseConfiguration;
 import org.springframework.data.couchbase.repository.config.EnableCouchbaseRepositories;
 
+import com.search.radius.repository.PropertyRepository;
+
 @Configuration
-@EnableCouchbaseRepositories(basePackages = { "com.search.radius.config" })
+@EnableCouchbaseRepositories(basePackageClasses = PropertyRepository.class)
 public class MyCouchbaseConfig extends AbstractCouchbaseConfiguration {
 
 	@Override
