@@ -1,11 +1,28 @@
 package com.search.radius.resources;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+
+@Entity
 public class Property {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	@NotBlank(message = "longitude cannot be empty")
 	private float longitude;
+	
+	@NotBlank(message = "latitude cannot be empty")
 	private float latitude;
+	
+	@NotBlank(message = "price cannt be empty")
 	private float price;
+	
+	@NotBlank(message = "bedrooms cannot be empty")
 	private int bedRooms;
 
 	public Property(float longitude, float latitude, float price, int bedRooms, int bathRooms) {
