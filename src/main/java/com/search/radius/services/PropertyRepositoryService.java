@@ -1,8 +1,11 @@
 package com.search.radius.services;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.couchbase.core.query.View;
 import org.springframework.stereotype.Service;
 
 import com.search.radius.repository.PropertyRepository;
@@ -16,13 +19,17 @@ public class PropertyRepositoryService implements PropertyService {
 
 	@Override
 	public Property findOne(String id) {
-		return null;
+		return repo.findById(id).get();
 	}
 
 	@Override
 	public List<Property> findAll() {
-		// TODO Auto-generated method stub
-		return (List<Property>) repo.findAll();
+        List<Property> properties = new ArrayList<Property>();
+        Iterator<Property> it = repo.findAll().iterator();
+        while(it.hasNext()) {
+        	properties.add(it.next());
+        }
+        return properties;
 	}
 
 	@Override
@@ -45,8 +52,7 @@ public class PropertyRepositoryService implements PropertyService {
 
 	@Override
 	public void delete(Property property) {
-		// TODO Auto-generated method stub
-
+		repo.delete(property);
 	}
 
 }

@@ -15,7 +15,7 @@ public class MyCouchbaseConfig extends AbstractCouchbaseConfiguration {
 
 	@Override
 	protected List<String> getBootstrapHosts() {
-		return Arrays.asList("10.238.196.133");
+		return Arrays.asList("localhost");
 	}
 
 	@Override
