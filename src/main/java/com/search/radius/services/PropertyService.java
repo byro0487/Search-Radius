@@ -3,19 +3,14 @@ package com.search.radius.services;
 import java.util.List;
 
 import com.search.radius.resources.Property;
+import com.search.radius.resources.Requirement;
 
 public interface PropertyService {
 
 	Property findOne(String id);
 
-	List<Property> findAll();
-
-	List<Property> findByFirstName(String firstName);
+	List<Property> findProperties(Requirement requirement);
 
 	void create(Property property);
-
-	void update(Property property);
-
-	void delete(Property property);
 
 }

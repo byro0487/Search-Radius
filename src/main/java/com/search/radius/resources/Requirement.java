@@ -1,57 +1,103 @@
 package com.search.radius.resources;
 
-import com.couchbase.client.java.repository.annotation.Field;
+import org.springframework.data.couchbase.core.mapping.Document;
 
+import com.couchbase.client.java.repository.annotation.Field;
+import com.couchbase.client.java.repository.annotation.Id;
+
+@Document
 public class Requirement {
 
-	String Id;
+	@Id
+	@Field
+	String id;
+	@Field
+	private double longitude;
+	@Field
+	private double latitude;
+	@Field
+	private int minBudget;
+	@Field
+	private int maxBudget;
+	@Field
+	private int minBedrooms;
+	@Field
+	private int maxBedrooms;
+	@Field
+	private int minBathrooms;
+	@Field
+	private int maxBathrooms;
 
-	@Field
-	private float longitude;
-
-	@Field
-	private float latitude;
-	@Field
-	private Budget budget;
-	@Field
-	private Bedrooms bedrooms;
-	@Field
-	private Bathrooms bathrooms;
 	public String getId() {
-		return Id;
+		return id;
 	}
+
 	public void setId(String id) {
-		Id = id;
+		this.id = id;
 	}
-	public float getLongitude() {
+
+	public double getLongitude() {
 		return longitude;
 	}
+
 	public void setLongitude(float longitude) {
 		this.longitude = longitude;
 	}
-	public float getLatitude() {
+
+	public double getLatitude() {
 		return latitude;
 	}
+
 	public void setLatitude(float latitude) {
 		this.latitude = latitude;
 	}
-	public Budget getBudget() {
-		return budget;
+
+	public int getMinBudget() {
+		return minBudget;
 	}
-	public void setBudget(Budget budget) {
-		this.budget = budget;
+
+	public void setMinBudget(int minBudget) {
+		this.minBudget = minBudget;
 	}
-	public Bedrooms getBedrooms() {
-		return bedrooms;
+
+	public int getMaxBudget() {
+		return maxBudget;
 	}
-	public void setBedrooms(Bedrooms bedrooms) {
-		this.bedrooms = bedrooms;
+
+	public void setMaxBudget(int maxBudget) {
+		this.maxBudget = maxBudget;
 	}
-	public Bathrooms getBathrooms() {
-		return bathrooms;
+
+	public int getMinBedrooms() {
+		return minBedrooms;
 	}
-	public void setBathrooms(Bathrooms bathrooms) {
-		this.bathrooms = bathrooms;
+
+	public void setMinBedrooms(int minBedrooms) {
+		this.minBedrooms = minBedrooms;
+	}
+
+	public int getMaxBedrooms() {
+		return maxBedrooms;
+	}
+
+	public void setMaxBedrooms(int maxBedrooms) {
+		this.maxBedrooms = maxBedrooms;
+	}
+
+	public int getMinBathrooms() {
+		return minBathrooms;
+	}
+
+	public void setMinBathrooms(int minBathrooms) {
+		this.minBathrooms = minBathrooms;
+	}
+
+	public int getMaxBathrooms() {
+		return maxBathrooms;
+	}
+
+	public void setMaxBathrooms(int maxBathrooms) {
+		this.maxBathrooms = maxBathrooms;
 	}
 
 }

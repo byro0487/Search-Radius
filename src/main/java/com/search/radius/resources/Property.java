@@ -3,9 +3,6 @@ package com.search.radius.resources;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.couchbase.core.mapping.Document;
-import org.springframework.data.couchbase.core.mapping.id.GeneratedValue;
-import org.springframework.data.couchbase.core.mapping.id.GenerationStrategy;
-import org.springframework.data.couchbase.core.mapping.id.IdAttribute;
 import org.springframework.data.couchbase.core.mapping.id.IdPrefix;
 import org.springframework.data.couchbase.core.mapping.id.IdSuffix;
 
@@ -16,7 +13,7 @@ import com.couchbase.client.java.repository.annotation.Id;
 public class Property {
 
 	@Id
-	@GeneratedValue(strategy = GenerationStrategy.UNIQUE, delimiter = ".")
+	@Field
 	private String id;
 
 	@IdPrefix(order = 0)
@@ -27,33 +24,22 @@ public class Property {
 
 	@Field
 	@NotNull
-	private float longitude;
+	private double longitude;
 
 	@Field
 	@NotNull
-	private float latitude;
+	private double latitude;
 
 	@Field
 	@NotNull
-	private float price;
+	private double price;
 
 	@Field
 	@NotNull
 	private int bedRooms;
 
-	public Property(float longitude, float latitude, float price, int bedRooms, int bathRooms) {
-		super();
-		this.longitude = longitude;
-		this.latitude = latitude;
-		this.price = price;
-		this.bedRooms = bedRooms;
-		this.bathRooms = bathRooms;
-	}
-
-	public Property() {
-		// default constructor
-	}
-
+	@Field
+	@NotNull
 	private int bathRooms;
 
 	public String getId() {
@@ -64,27 +50,27 @@ public class Property {
 		this.id = id;
 	}
 
-	public float getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(float longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
-	public float getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(float latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
@@ -100,6 +86,10 @@ public class Property {
 		return bathRooms;
 	}
 
+	public void setBathRooms(int bathRooms) {
+		this.bathRooms = bathRooms;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -107,9 +97,13 @@ public class Property {
 		result = prime * result + bathRooms;
 		result = prime * result + bedRooms;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + Float.floatToIntBits(latitude);
-		result = prime * result + Float.floatToIntBits(longitude);
-		result = prime * result + Float.floatToIntBits(price);
+		long temp;
+		temp = Double.doubleToLongBits(latitude);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(longitude);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(price);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((userPrefix == null) ? 0 : userPrefix.hashCode());
 		result = prime * result + ((userSuffix == null) ? 0 : userSuffix.hashCode());
 		return result;
@@ -133,11 +127,11 @@ public class Property {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (Float.floatToIntBits(latitude) != Float.floatToIntBits(other.latitude))
+		if (Double.doubleToLongBits(latitude) != Double.doubleToLongBits(other.latitude))
 			return false;
-		if (Float.floatToIntBits(longitude) != Float.floatToIntBits(other.longitude))
+		if (Double.doubleToLongBits(longitude) != Double.doubleToLongBits(other.longitude))
 			return false;
-		if (Float.floatToIntBits(price) != Float.floatToIntBits(other.price))
+		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
 			return false;
 		if (userPrefix == null) {
 			if (other.userPrefix != null)
@@ -152,8 +146,17 @@ public class Property {
 		return true;
 	}
 
-	public void setBathRooms(int bathRooms) {
+	public Property(double longitude, double latitude, double price, int bedRooms, int bathRooms) {
+		super();
+		this.longitude = longitude;
+		this.latitude = latitude;
+		this.price = price;
+		this.bedRooms = bedRooms;
 		this.bathRooms = bathRooms;
+	}
+
+	public Property() {
+		// default constructor
 	}
 
 }

@@ -1,13 +1,12 @@
 package com.search.radius.controllers;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.search.radius.resources.Property;
+import com.search.radius.resources.Requirement;
 import com.search.radius.services.PropertyService;
+import com.search.radius.services.PropertyValidator;
+import com.search.radius.services.RequirementRepositoryService;
 
 @Controller
 public class PropertySearchController {
@@ -24,22 +26,11 @@ public class PropertySearchController {
 	@Autowired
 	PropertyService propertyService;
 
-	@GetMapping(value = "/")
-	public String homePage(Model model) {
-		propertyService.create(new Property(0, 0, 1000, 2, 2));
-		propertyService.create(new Property(0, 0, 1000, 2, 2));
-		propertyService.create(new Property(0, 1, 2000, 3, 2));
-		propertyService.create(new Property(1, 0, 3000, 3, 3));
-		propertyService.create(new Property(1, 1, 4000, 4, 2));
-		model.addAttribute("appName", "Radius Search");
-		return "home";
-	}
+	@Autowired
+	private RequirementRepositoryService requirementRepo;
 
-	@GetMapping(value = "/all")
-	public String getAll(Model model) {
-		model.addAttribute("properties", Arrays.asList(propertyService.findOne("0")));
-		return "a";
-	}
+	@Autowired
+	PropertyValidator propertyValidator;
 
 	@PostMapping(value = "/property")
 	public ResponseEntity<Property> addProperty(@RequestBody Property property) {
@@ -58,13 +49,16 @@ public class PropertySearchController {
 
 	@GetMapping(value = "/property", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Property searchProperties(@RequestParam("filters") String filters) {
-		// validation of input
-		// storing in DB
-		// query from DB
-		// Encoding format '&' = '%26' and '=' = '%3D'
-		System.out.println(filters);
-		return propertyService.findOne("0");
+	public List<Property> searchProperties(@RequestParam("filters") String filters) {
+
+		// Encoding format '&' = '%26' and '=' = '%3D' as per TMF alignment
+
+		Requirement requirement = propertyValidator.validateAndSetRequirement(filters);
+		if (requirement != null) {
+			requirementRepo.createRequirement(requirement);
+		}
+
+		return propertyService.findProperties(requirement);
 	}
 
 }

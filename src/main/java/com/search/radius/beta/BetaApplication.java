@@ -7,12 +7,11 @@ import org.springframework.context.annotation.ComponentScan;
 import com.search.radius.config.ControllersConfig;
 import com.search.radius.config.MyCouchbaseConfig;
 import com.search.radius.config.ResourcesConfig;
-import com.search.radius.config.SecurityConfig;
 import com.search.radius.config.ServicesConfig;
 
 @SpringBootApplication
 @ComponentScan(basePackageClasses = { ControllersConfig.class, ResourcesConfig.class, MyCouchbaseConfig.class,
-		ServicesConfig.class ,SecurityConfig.class})
+		ServicesConfig.class })
 public class BetaApplication {
 
 	public static void main(String[] args) {
