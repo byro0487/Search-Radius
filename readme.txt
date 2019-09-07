@@ -1,6 +1,6 @@
 Code Documentation:
 
-"BeatApplication" provides three functionalities
+"BetaApplication" provides three functionalities
 1.Add a property
 2.Retrieve a property based on its id.
 3.Search for properties based on the specific search criteria.
@@ -30,5 +30,7 @@ We need the Requirement resource because we are also storing the search request 
 Each method inside the code is well commented to know further details. 
 
 Note:(Future)
-Further scope, we can integrate our application with search engine in order to improve the searching.
-Example: Apache lucene is integrated with this application fora test example. 
+Further scope, we can integrate our application with search engine in order to improve the search performance.
+Example: Apache lucene is integrated with this application for a test example. 
+
+
