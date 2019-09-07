@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.search.radius.resources.Property;
@@ -54,10 +55,15 @@ public class PropertySearchController {
 		return propertyService.findOne(id);
 
 	}
-	
-	@GetMapping(value = "/Property", produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@GetMapping(value = "/property", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Property getProperties() {
+	public Property searchProperties(@RequestParam("filters") String filters) {
+		// validation of input
+		// storing in DB
+		// query from DB
+		// Encoding format '&' = '%26' and '=' = '%3D'
+		System.out.println(filters);
 		return propertyService.findOne("0");
 	}
 
