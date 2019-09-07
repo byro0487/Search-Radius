@@ -5,6 +5,9 @@ import javax.validation.constraints.NotNull;
 import org.springframework.data.couchbase.core.mapping.Document;
 import org.springframework.data.couchbase.core.mapping.id.GeneratedValue;
 import org.springframework.data.couchbase.core.mapping.id.GenerationStrategy;
+import org.springframework.data.couchbase.core.mapping.id.IdAttribute;
+import org.springframework.data.couchbase.core.mapping.id.IdPrefix;
+import org.springframework.data.couchbase.core.mapping.id.IdSuffix;
 
 import com.couchbase.client.java.repository.annotation.Field;
 import com.couchbase.client.java.repository.annotation.Id;
@@ -13,8 +16,14 @@ import com.couchbase.client.java.repository.annotation.Id;
 public class Property {
 
 	@Id
-	@GeneratedValue(strategy = GenerationStrategy.UNIQUE)
-	private int id;
+	@GeneratedValue(strategy = GenerationStrategy.UNIQUE, delimiter = ".")
+	private String id;
+
+	@IdPrefix(order = 0)
+	private String userPrefix = "Property";
+
+	@IdSuffix(order = 0)
+	private String userSuffix;
 
 	@Field
 	@NotNull
@@ -47,11 +56,11 @@ public class Property {
 
 	private int bathRooms;
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -91,20 +100,18 @@ public class Property {
 		return bathRooms;
 	}
 
-	public void setBathRooms(int bathRooms) {
-		this.bathRooms = bathRooms;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + bathRooms;
 		result = prime * result + bedRooms;
-		result = prime * result + id;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + Float.floatToIntBits(latitude);
 		result = prime * result + Float.floatToIntBits(longitude);
 		result = prime * result + Float.floatToIntBits(price);
+		result = prime * result + ((userPrefix == null) ? 0 : userPrefix.hashCode());
+		result = prime * result + ((userSuffix == null) ? 0 : userSuffix.hashCode());
 		return result;
 	}
 
@@ -121,7 +128,10 @@ public class Property {
 			return false;
 		if (bedRooms != other.bedRooms)
 			return false;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		if (Float.floatToIntBits(latitude) != Float.floatToIntBits(other.latitude))
 			return false;
@@ -129,7 +139,21 @@ public class Property {
 			return false;
 		if (Float.floatToIntBits(price) != Float.floatToIntBits(other.price))
 			return false;
+		if (userPrefix == null) {
+			if (other.userPrefix != null)
+				return false;
+		} else if (!userPrefix.equals(other.userPrefix))
+			return false;
+		if (userSuffix == null) {
+			if (other.userSuffix != null)
+				return false;
+		} else if (!userSuffix.equals(other.userSuffix))
+			return false;
 		return true;
+	}
+
+	public void setBathRooms(int bathRooms) {
+		this.bathRooms = bathRooms;
 	}
 
 }

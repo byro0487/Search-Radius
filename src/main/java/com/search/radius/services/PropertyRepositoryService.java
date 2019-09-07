@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.couchbase.core.query.View;
+import org.springframework.data.couchbase.core.CouchbaseTemplate;
 import org.springframework.stereotype.Service;
 
 import com.search.radius.repository.PropertyRepository;
@@ -17,6 +17,9 @@ public class PropertyRepositoryService implements PropertyService {
 	@Autowired
 	private PropertyRepository repo;
 
+	@Autowired
+	private CouchbaseTemplate couchbaseTemplate;
+
 	@Override
 	public Property findOne(String id) {
 		return repo.findById(id).get();
@@ -24,12 +27,12 @@ public class PropertyRepositoryService implements PropertyService {
 
 	@Override
 	public List<Property> findAll() {
-        List<Property> properties = new ArrayList<Property>();
-        Iterator<Property> it = repo.findAll().iterator();
-        while(it.hasNext()) {
-        	properties.add(it.next());
-        }
-        return properties;
+		List<Property> properties = new ArrayList<Property>();
+		Iterator<Property> it = repo.findAll().iterator();
+		while (it.hasNext()) {
+			properties.add(it.next());
+		}
+		return properties;
 	}
 
 	@Override
@@ -40,8 +43,12 @@ public class PropertyRepositoryService implements PropertyService {
 
 	@Override
 	public void create(Property property) {
-		repo.save(property);
 
+		// couchbaseTemplate.keySettings(KeySettings.build().suffix("beta"));
+		// property.setId(UUID.randomUUID().toString());
+		property.setId("Property_" + property.getLongitude() + "_" + property.getLatitude());
+
+		repo.save(property);
 	}
 
 	@Override
