@@ -2,8 +2,11 @@ Code Documentation:
 
 "BetaApplication" provides three functionalities
 1.Add a property
+Ex: POST -> localhost:8080/search/property
 2.Retrieve a property based on its id.
+Ex: GET -> localhost:8080/search/property/Property_11.98_0.0
 3.Search for properties based on the specific search criteria.
+EX: GET -> localhost:8080/search/property?filters=longitude%3D123%26%26latitude%3D234
 
 TechStack:
 1.JAVA
