@@ -32,6 +32,7 @@ public class PropertySearchController {
 	@Autowired
 	PropertyValidator propertyValidator;
 
+	// POST operation for creating property.
 	@PostMapping(value = "/property")
 	public ResponseEntity<Property> addProperty(@RequestBody Property property) {
 
@@ -39,6 +40,7 @@ public class PropertySearchController {
 		return new ResponseEntity<Property>(HttpStatus.CREATED);
 	}
 
+	// GET operation for retrieving property based on ID.
 	@GetMapping(value = "/property/{id}")
 	@ResponseBody
 	public Property getProperty(@PathVariable("id") String id) {
@@ -47,6 +49,8 @@ public class PropertySearchController {
 
 	}
 
+	// GET operation for retrieving properties based on the search criteria provided
+	// in filters
 	@GetMapping(value = "/property", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Property> searchProperties(@RequestParam("filters") String filters) {

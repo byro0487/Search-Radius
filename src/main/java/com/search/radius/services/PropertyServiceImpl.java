@@ -32,11 +32,13 @@ public class PropertyServiceImpl implements PropertyService {
 	@Autowired
 	private PropertyRepository repo;
 
+	// Find property based on id.
 	@Override
 	public Property findOne(String id) {
 		return repo.findById(id).get();
 	}
 
+	// Search properties based on requirement criteria.
 	@Override
 	public List<Property> findProperties(Requirement requirement) {
 
@@ -46,13 +48,18 @@ public class PropertyServiceImpl implements PropertyService {
 		return filterBasedOnDistance(list, requirement);
 	}
 
+	// Add property resource.
 	@Override
 	public void create(Property property) {
+		
+		// set id based on the input parameters
 		property.setId("Property_" + property.getLongitude() + "_" + property.getLatitude());
 
+		// calling repository service to save in DB
 		repo.save(property);
 	}
 
+	// Helper method to filter properties based on distance.
 	private List<Property> filterBasedOnDistance(List<Property> list, Requirement requirement) {
 		int i = 0;
 		while (i < list.size()) {
@@ -69,6 +76,7 @@ public class PropertyServiceImpl implements PropertyService {
 
 	}
 
+	// Cluster and query formation.
 	private List<N1qlQueryRow> clusterSetupAndQueryFormation(Requirement requirement) {
 
 		System.setProperty("com.couchbase.queryEnabled", "true");
@@ -93,6 +101,7 @@ public class PropertyServiceImpl implements PropertyService {
 
 	}
 
+	// Helper method used for calculating the distance based on latitude and longitude.
 	private double getDistanceFromLatLonInMiles(double lat1, double lon1, double lat2, double lon2) {
 		double R = 3958.8; // Radius of the earth in miles
 		double dLat = deg2rad(lat2 - lat1); // deg2rad below
@@ -104,10 +113,12 @@ public class PropertyServiceImpl implements PropertyService {
 		return d;
 	}
 
+	// Helper method for calculating distance.
 	private double deg2rad(double deg) {
 		return deg * (Math.PI / 180);
 	}
 
+	// Create property based on query results.
 	private List<Property> createObjectsFromJson(List<N1qlQueryRow> results) {
 
 		List<Property> list = new ArrayList<Property>();
